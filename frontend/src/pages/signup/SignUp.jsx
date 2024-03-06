@@ -28,6 +28,7 @@ const SignUp = () => {
 
 
 
+    // this is the signup section html/css
 
     return <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
         <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg 
@@ -92,7 +93,9 @@ const SignUp = () => {
                     Already have an account?
                 </Link>
                 <div>
-                    <button className='btn btn-block btn-sm mt-2 bg-darkgray-100 hover:bg-blue-500'>Sign Up</button>
+                    <button className='btn btn-block btn-sm mt-2 border border-slate-700' disabled={loading}>
+                        {loading ? <span className='loading loading-spinner'></span> : "Sign Up"}
+                    </button>
                 </div>
                 </form>
 
