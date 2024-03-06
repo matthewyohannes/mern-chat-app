@@ -1,6 +1,7 @@
 import express from "express"
 import dotenv from "dotenv" // allows access to env variable data
 import cookieParser from "cookie-parser";
+import path from 'path';
 
 
 import authRoutes from "./routes/auth.routes.js"
@@ -13,7 +14,9 @@ import { app, server } from "./socket/socket.js";
 
 
 
-const PORT = process.env.PORT || 5000; 
+const PORT = process.env.PORT || 5000;
+
+const __dirname = path.resolve(); // deployment purposes
 
 dotenv.config(); // allows env variables to work
 
@@ -24,11 +27,11 @@ app.use("/api/auth", authRoutes); // accesses the auth.routes.js file when that 
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 
-// app.get("/", (req, res) => {
-//     //root route http://localhost:5000/
-//     res.send("Hello, World!");
-// });
+app.use(express.static(path.join(__dirname, "/frontend/dist"))); // deployment purposes
 
+app.get("*", (req, res) => {
+	res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+});
 
 
 server.listen(PORT, () => { // connects backend to mongoDB and will return error if cannot connect
